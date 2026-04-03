@@ -1,10 +1,28 @@
 {
-  "name": "dokploy-mcp",
-  "module": "index.ts",
-  "type": "module",
-  "private": true,
+  "name": "@wyattjoh/dokploy-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that wraps the Dokploy REST API",
   "bin": {
-    "dokploy-mcp": "src/index.ts"
+    "dokploy-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "build": "bun build src/index.ts --target=node --outdir=dist --format=esm",
+    "start": "bun run src/index.ts",
+    "start:http": "bun run src/index.ts --http",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt .",
+    "fmt:check": "oxfmt --check .",
+    "typecheck": "bunx tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -13,21 +31,7 @@
     "oxfmt": "^0.43.0",
     "oxlint": "^1.58.0"
   },
-  "scripts": {
-    "start": "bun run src/index.ts",
-    "start:http": "bun run src/index.ts --http",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
-    "fmt": "oxfmt .",
-    "fmt:check": "oxfmt --check .",
-    "typecheck": "bun check"
-  },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
-    "express": "^5.2.1",
-    "zod": "^4.3.6"
   }
 }

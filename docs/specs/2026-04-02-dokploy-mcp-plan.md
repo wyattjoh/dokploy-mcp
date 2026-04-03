@@ -45,6 +45,7 @@ dokploy-mcp/
 ### Task 1: Project Scaffold
 
 **Files:**
+
 - Create: `package.json`
 - Create: `tsconfig.json`
 - Create: `.gitignore`
@@ -55,6 +56,7 @@ dokploy-mcp/
 - [ ] **Step 1: Initialize Bun project and install dependencies**
 
 Run:
+
 ```bash
 cd /Users/wyatt.johnson/Code/github.com/wyattjoh/dokploy-mcp
 bun init -y
@@ -152,6 +154,7 @@ git commit -m "chore: scaffold Bun project with MCP SDK dependencies"
 ### Task 2: Config and Auth Modules
 
 **Files:**
+
 - Create: `src/config.ts`
 - Create: `src/auth.ts`
 
@@ -183,10 +186,7 @@ function sha256(input: string): Buffer {
   return hasher.digest() as Buffer;
 }
 
-export function validateBearerToken(
-  authHeader: string | null,
-  expectedToken: string,
-): boolean {
+export function validateBearerToken(authHeader: string | null, expectedToken: string): boolean {
   if (!authHeader?.startsWith("Bearer ")) {
     return false;
   }
@@ -207,6 +207,7 @@ git commit -m "feat: add config and auth modules"
 ### Task 3: Dokploy API Client
 
 **Files:**
+
 - Create: `src/client.ts`
 
 This is the typed fetch wrapper for all Dokploy API calls. Every tool delegates to this module.
@@ -376,6 +377,7 @@ git commit -m "feat: add Dokploy API client"
 ### Task 4: Tool Modules (Projects, Applications, Deployments, Domains, Environment)
 
 **Files:**
+
 - Create: `src/tools/projects.ts`
 - Create: `src/tools/applications.ts`
 - Create: `src/tools/deployments.ts`
@@ -435,12 +437,7 @@ export function register(server: McpServer): void {
       inputSchema: {
         projectId: z.string().optional().describe("Filter by project ID"),
         name: z.string().optional().describe("Filter by application name"),
-        limit: z
-          .number()
-          .min(1)
-          .max(100)
-          .optional()
-          .describe("Max results (1-100, default 20)"),
+        limit: z.number().min(1).max(100).optional().describe("Max results (1-100, default 20)"),
         offset: z.number().optional().describe("Offset for pagination"),
       },
       annotations: {
@@ -491,9 +488,7 @@ export function register(server: McpServer): void {
         "Update application config fields. Only applicationId is required; all other fields are optional. Supports: name, appName, description, dockerfile, dockerContextPath, command, replicas, memoryLimit, cpuLimit, and more.",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
-        updates: z
-          .record(z.unknown())
-          .describe("Key-value pairs of fields to update"),
+        updates: z.record(z.unknown()).describe("Key-value pairs of fields to update"),
       },
       annotations: {
         readOnlyHint: false,
@@ -707,8 +702,7 @@ export function register(server: McpServer): void {
     "dokploy_list_environment",
     {
       title: "List Environment Variables",
-      description:
-        "List environment variables, build args, and build secrets for an application.",
+      description: "List environment variables, build args, and build secrets for an application.",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
       },
@@ -750,18 +744,9 @@ export function register(server: McpServer): void {
         "Set environment variables for an application. Merges with existing vars (existing keys are overwritten, new keys are added, unmentioned keys are preserved).",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
-        env: z
-          .record(z.string())
-          .optional()
-          .describe("Environment variables to set (KEY: VALUE)"),
-        buildArgs: z
-          .record(z.string())
-          .optional()
-          .describe("Build arguments to set (KEY: VALUE)"),
-        buildSecrets: z
-          .record(z.string())
-          .optional()
-          .describe("Build secrets to set (KEY: VALUE)"),
+        env: z.record(z.string()).optional().describe("Environment variables to set (KEY: VALUE)"),
+        buildArgs: z.record(z.string()).optional().describe("Build arguments to set (KEY: VALUE)"),
+        buildSecrets: z.record(z.string()).optional().describe("Build secrets to set (KEY: VALUE)"),
         createEnvFile: z
           .boolean()
           .optional()
@@ -802,13 +787,10 @@ export function register(server: McpServer): void {
     "dokploy_delete_environment",
     {
       title: "Delete Environment Variables",
-      description:
-        "Remove environment variables from an application by key name.",
+      description: "Remove environment variables from an application by key name.",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
-        keys: z
-          .array(z.string())
-          .describe("List of environment variable keys to remove"),
+        keys: z.array(z.string()).describe("List of environment variable keys to remove"),
       },
       annotations: {
         readOnlyHint: false,
@@ -860,6 +842,7 @@ git commit -m "feat: add MCP tool modules for all Dokploy operations"
 ### Task 5: Build Config Tools
 
 **Files:**
+
 - Create: `src/tools/build.ts`
 
 - [ ] **Step 1: Create src/tools/build.ts**
@@ -888,18 +871,14 @@ export function register(server: McpServer): void {
             "railpack",
           ])
           .describe("Build type"),
-        dockerfile: z
-          .string()
-          .describe("Path to Dockerfile (e.g. './Dockerfile')"),
+        dockerfile: z.string().describe("Path to Dockerfile (e.g. './Dockerfile')"),
         dockerContextPath: z
           .string()
           .describe("Docker build context path (e.g. '.' for repo root)"),
         dockerBuildStage: z
           .string()
           .describe("Docker build stage (empty string if not using multi-stage)"),
-        herokuVersion: z
-          .string()
-          .describe("Heroku version (empty string if not using Heroku)"),
+        herokuVersion: z.string().describe("Heroku version (empty string if not using Heroku)"),
         railpackVersion: z
           .string()
           .describe("Railpack version (empty string if not using Railpack)"),
@@ -922,16 +901,13 @@ export function register(server: McpServer): void {
     "dokploy_save_github_provider",
     {
       title: "Save GitHub Provider",
-      description:
-        "Update GitHub source configuration for an application.",
+      description: "Update GitHub source configuration for an application.",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
         repository: z.string().describe("GitHub repository name"),
         branch: z.string().describe("Branch to deploy from"),
         owner: z.string().describe("GitHub repository owner"),
-        buildPath: z
-          .string()
-          .describe("Build path within the repo ('/' for root)"),
+        buildPath: z.string().describe("Build path within the repo ('/' for root)"),
         githubId: z.string().describe("GitHub integration ID"),
         triggerType: z
           .enum(["push", "tag"])
@@ -947,9 +923,7 @@ export function register(server: McpServer): void {
     async (args) => {
       await saveGithubProvider(args);
       return {
-        content: [
-          { type: "text" as const, text: "GitHub provider saved successfully." },
-        ],
+        content: [{ type: "text" as const, text: "GitHub provider saved successfully." }],
       };
     },
   );
@@ -968,6 +942,7 @@ git commit -m "feat: add build config tool module"
 ### Task 6: MCP Server Setup
 
 **Files:**
+
 - Create: `src/server.ts`
 
 - [ ] **Step 1: Create src/server.ts**
@@ -1010,6 +985,7 @@ git commit -m "feat: add MCP server setup with tool registration"
 ### Task 7: Entry Point with Dual Transport
 
 **Files:**
+
 - Create: `src/index.ts`
 
 - [ ] **Step 1: Create src/index.ts**
@@ -1052,10 +1028,7 @@ async function startHttp(port: number): Promise<void> {
   app.use(express.json());
 
   app.post("/mcp", async (req, res) => {
-    const authorized = validateBearerToken(
-      req.headers.authorization ?? null,
-      config.apiToken,
-    );
+    const authorized = validateBearerToken(req.headers.authorization ?? null, config.apiToken);
     if (!authorized) {
       res.status(401).json({ error: "Unauthorized" });
       return;
@@ -1086,6 +1059,7 @@ async function startHttp(port: number): Promise<void> {
 - [ ] **Step 2: Verify stdio transport starts**
 
 Run:
+
 ```bash
 echo '{}' | DOKPLOY_API_TOKEN=test bun run src/index.ts 2>&1 | head -5
 ```
@@ -1095,6 +1069,7 @@ Expected: Should see "dokploy-mcp: stdio transport ready" on stderr.
 - [ ] **Step 3: Verify HTTP transport starts**
 
 Run:
+
 ```bash
 DOKPLOY_API_TOKEN=test bun run src/index.ts --http --port 3001 &
 sleep 1
@@ -1120,6 +1095,7 @@ git commit -m "feat: add entry point with stdio and HTTP transport"
 - [ ] **Step 1: Test stdio mode with op run**
 
 Run:
+
 ```bash
 echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"0.1.0"}}}' | \
   op run --env-file=.env.tpl -- bun run src/index.ts 2>/dev/null | head -1
@@ -1130,11 +1106,13 @@ Expected: JSON response with server capabilities (Touch ID prompt once).
 - [ ] **Step 2: Test HTTP mode list projects**
 
 Start the server in HTTP mode:
+
 ```bash
 op run --env-file=.env.tpl -- bun run src/index.ts --http --port 3001 &
 ```
 
 Then test the list projects tool via MCP protocol:
+
 ```bash
 API_KEY=$(op read 'op://Personal/Dokploy API Token - Claude Code Cybersphere/credential')
 
@@ -1207,6 +1185,7 @@ git commit -m "chore: fix lint, formatting, and type errors"
 ### Task 10: Update dokploy-api Skill in claude-toolkit
 
 **Files:**
+
 - Modify: `/Users/wyatt.johnson/Code/github.com/wyattjoh/claude-toolkit/skills/dokploy-api/SKILL.md`
 
 - [ ] **Step 1: Update SKILL.md**
@@ -1214,6 +1193,7 @@ git commit -m "chore: fix lint, formatting, and type errors"
 Replace the skill content to reference MCP tools instead of curl snippets. Keep the gotchas section and SSH log reading. The new `allowed-tools` should list the MCP tool names plus `Bash(ssh:*)` for log reading.
 
 Key changes:
+
 - Replace `allowed-tools: Bash(deno:*, ssh:*)` with MCP tool names and `Bash(ssh:*)`
 - Remove the Authentication section with `op read` snippets
 - Remove all Quick Reference curl snippets
@@ -1223,6 +1203,7 @@ Key changes:
 - Keep the references/ directory
 
 Updated frontmatter `allowed-tools`:
+
 ```yaml
 allowed-tools:
   - mcp__dokploy__dokploy_list_projects
@@ -1248,6 +1229,7 @@ allowed-tools:
 ```
 
 Add a `.mcp.json` example section:
+
 ```json
 {
   "mcpServers": {
@@ -1281,6 +1263,7 @@ git commit -m "refactor(dokploy-api): replace curl snippets with MCP tool refere
 - [ ] **Step 1: Start a fresh Claude Code session with .mcp.json configured**
 
 Add the `.mcp.json` to the dokploy-mcp project root (or the user's global config) and verify that:
+
 1. Claude Code launches the MCP server via `op run`
 2. Touch ID prompts exactly once
 3. All 15 tools appear in Claude's tool list

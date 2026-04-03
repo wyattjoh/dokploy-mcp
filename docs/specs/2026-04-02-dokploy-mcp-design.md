@@ -38,7 +38,7 @@ Client (Claude Code / Claude mobile)
 Single token (`DOKPLOY_API_TOKEN`) serves both purposes:
 
 - **Client auth (HTTP mode):** Clients send the token as `Authorization: Bearer
-  <token>`. The server validates using timing-safe comparison.
+<token>`. The server validates using timing-safe comparison.
 - **Dokploy API auth:** The server forwards the same token as `x-api-key` to all
   Dokploy API requests.
 
@@ -88,28 +88,28 @@ op run --env-file=.env.tpl -- bun run src/index.ts --http --port 3000
 
 ### Read Operations (annotated as read-only)
 
-| Tool | Description |
-|------|-------------|
-| `dokploy_list_projects` | List all projects |
+| Tool                        | Description                                            |
+| --------------------------- | ------------------------------------------------------ |
+| `dokploy_list_projects`     | List all projects                                      |
 | `dokploy_list_applications` | List all applications (optionally filtered by project) |
-| `dokploy_get_application` | Get full app config by ID |
-| `dokploy_list_deployments` | List deployments for an app (newest first) |
-| `dokploy_list_domains` | List domains configured for an app |
-| `dokploy_list_environment` | List environment variables for an app |
+| `dokploy_get_application`   | Get full app config by ID                              |
+| `dokploy_list_deployments`  | List deployments for an app (newest first)             |
+| `dokploy_list_domains`      | List domains configured for an app                     |
+| `dokploy_list_environment`  | List environment variables for an app                  |
 
 ### Write Operations
 
-| Tool | Description |
-|------|-------------|
-| `dokploy_deploy` | Trigger a deployment (applicationId, optional title/description) |
-| `dokploy_update_application` | Update app config fields (applicationId + any updatable fields) |
-| `dokploy_start_application` | Start an app |
-| `dokploy_stop_application` | Stop an app |
-| `dokploy_save_build_type` | Update build config (dockerfile, dockerContextPath, dockerBuildStage) |
+| Tool                           | Description                                                                     |
+| ------------------------------ | ------------------------------------------------------------------------------- |
+| `dokploy_deploy`               | Trigger a deployment (applicationId, optional title/description)                |
+| `dokploy_update_application`   | Update app config fields (applicationId + any updatable fields)                 |
+| `dokploy_start_application`    | Start an app                                                                    |
+| `dokploy_stop_application`     | Stop an app                                                                     |
+| `dokploy_save_build_type`      | Update build config (dockerfile, dockerContextPath, dockerBuildStage)           |
 | `dokploy_save_github_provider` | Update GitHub source config (repository, branch, owner, buildPath, triggerType) |
-| `dokploy_create_domain` | Add a domain to an app |
-| `dokploy_update_environment` | Create/update environment variables for an app |
-| `dokploy_delete_environment` | Remove an environment variable from an app |
+| `dokploy_create_domain`        | Add a domain to an app                                                          |
+| `dokploy_update_environment`   | Create/update environment variables for an app                                  |
+| `dokploy_delete_environment`   | Remove an environment variable from an app                                      |
 
 15 tools total. Each maps 1:1 to a Dokploy API endpoint.
 
@@ -157,10 +157,10 @@ dokploy-mcp/
 
 ### Toolchain
 
-| Concern | Tool |
-|---------|------|
-| Linting | oxlint |
-| Formatting | oxfmt |
+| Concern       | Tool                       |
+| ------------- | -------------------------- |
+| Linting       | oxlint                     |
+| Formatting    | oxfmt                      |
 | Type checking | `bun check` (built-in tsc) |
 
 ## Skill Updates (claude-toolkit)

@@ -9,16 +9,17 @@ MCP (Model Context Protocol) server that wraps the Dokploy REST API. Exposes Dok
 ## Commands
 
 ```bash
+bun run build              # transpile to dist/ (Node.js target)
 bun run start              # stdio transport (default, for Claude Code)
 bun run start:http         # HTTP transport on port 3000 (for remote/mobile)
 bun run lint               # oxlint
 bun run lint:fix           # oxlint --fix
 bun run fmt                # oxfmt format
 bun run fmt:check          # oxfmt check
-bunx tsc --noEmit          # type check
+bun run typecheck          # tsc --noEmit
 ```
 
-After code changes, run: `bunx oxlint src/ && bunx oxfmt src/ && bunx tsc --noEmit`
+After code changes, run: `bun run lint && bun run typecheck`
 
 ## Architecture
 
