@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "dokploy": {
+      "command": "op",
+      "args": ["run", "--", "dokploy-mcp"],
+      "env": {
+        "DOKPLOY_API_TOKEN": "op://Personal/Dokploy API Token - Claude Code Cybersphere/credential"
+      }
+    }
+  }
+}
