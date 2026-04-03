@@ -1,3 +1,4 @@
+#!/usr/bin/env bun
 import "./config.js"; // Validate env vars on startup (side-effect import)
 import { createServer } from "./server.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
