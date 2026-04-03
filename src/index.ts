@@ -11,7 +11,7 @@ const portIndex = args.indexOf("--port");
 const port = portIndex !== -1 ? Number(args[portIndex + 1]) : 3000;
 
 if (isHttp) {
-  if (getMcpToken() === undefined) {
+  if (!getMcpToken()) {
     console.error("DOKPLOY_MCP_TOKEN is required when using --http transport.");
     process.exit(1);
   }

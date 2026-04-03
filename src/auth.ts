@@ -1,6 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 
-const mcpToken = process.env.DOKPLOY_MCP_TOKEN?.trim();
+const mcpToken = process.env.DOKPLOY_MCP_TOKEN?.trim() || undefined;
 
 export function getMcpToken(): string | undefined {
   return mcpToken;
