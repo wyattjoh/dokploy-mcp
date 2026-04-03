@@ -1,0 +1,30 @@
+{
+  "name": "dokploy-mcp",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^5.0.6",
+    "bun-types": "^1.3.11",
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.58.0"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "start:http": "bun run src/index.ts --http",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt .",
+    "fmt:check": "oxfmt --check .",
+    "typecheck": "bun check"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
+  }
+}
