@@ -1,10 +1,9 @@
 #!/usr/bin/env bun
-import "./config.js"; // Validate env vars on startup (side-effect import)
 import { createServer } from "./server.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
-import { validateBearerToken } from "./auth.js";
+import { getMcpToken, validateBearerToken } from "./auth.js";
 
 const args = process.argv.slice(2);
 const isHttp = args.includes("--http");
@@ -12,6 +11,10 @@ const portIndex = args.indexOf("--port");
 const port = portIndex !== -1 ? Number(args[portIndex + 1]) : 3000;
 
 if (isHttp) {
+  if (getMcpToken() === undefined) {
+    console.error("DOKPLOY_MCP_TOKEN is required when using --http transport.");
+    process.exit(1);
+  }
   await startHttp(port);
 } else {
   await startStdio();
