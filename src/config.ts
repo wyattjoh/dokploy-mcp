@@ -9,7 +9,7 @@ export type Config = {
   instances: Record<string, InstanceConfig>;
 };
 
-const DEFAULT_URL = "https://dokploy.wyattjoh.dev/api";
+const DEFAULT_URL = "https://dokploy.wyattjoh.dev";
 
 // Env var names to skip when scanning for multi-instance vars.
 const EXCLUDED_SUFFIXES = new Set(["MCP_TOKEN"]);

@@ -4,7 +4,10 @@
       "command": "op",
       "args": ["run", "--", "dokploy-mcp"],
       "env": {
-        "DOKPLOY_API_TOKEN": "op://Personal/Dokploy API Token - Claude Code Cybersphere/credential"
+        "DOKPLOY_DEEPTHOUGHT_API_TOKEN": "op://Personal/Dokploy API Token - DeepThought/credential",
+        "DOKPLOY_DEEPTHOUGHT_URL": "https://deepthought.trex-neon.ts.net",
+        "DOKPLOY_CYBERSPHERE_API_TOKEN": "op://Personal/Dokploy API Token - Claude Code Cybersphere/Section_oxgqsyavidqxtz7dfu2tpp5fne/credential",
+        "DOKPLOY_CYBERSPHERE_URL": "https://dokploy.wyattjoh.dev"
       }
     }
   }

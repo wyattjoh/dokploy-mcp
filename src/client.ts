@@ -16,7 +16,8 @@ export class DokployClient {
   private readonly apiToken: string;
 
   constructor(instanceConfig: InstanceConfig) {
-    this.url = instanceConfig.url;
+    const base = instanceConfig.url.replace(/\/+$/, "");
+    this.url = `${base}/api`;
     this.apiToken = instanceConfig.apiToken;
   }
 

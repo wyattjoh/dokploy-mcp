@@ -55,7 +55,7 @@ Every file in `src/tools/` exports a single `register(server: InstanceAwareServe
 - tRPC-style endpoints at `/api/<router>.<action>` (e.g., `application.deploy`)
 - GET for queries (params as query string), POST for mutations (JSON body)
 - Auth via `x-api-key` header
-- Base URL defaults to `https://dokploy.wyattjoh.dev/api` in single-instance mode, required per instance in multi-instance mode
+- Base URL defaults to `https://dokploy.wyattjoh.dev` in single-instance mode, required per instance in multi-instance mode. The `/api` path is appended automatically by the client.
 - No `application.all` endpoint exists; apps are extracted from `project.all` response
 - Environment variables stored as newline-delimited `KEY=VALUE` strings, not structured objects
 
