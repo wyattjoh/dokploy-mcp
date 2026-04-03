@@ -14,6 +14,7 @@ export class DokployError extends Error {
 export class DokployClient {
   private readonly url: string;
   private readonly apiToken: string;
+  private readonly timeout = 30_000;
 
   constructor(instanceConfig: InstanceConfig) {
     const base = instanceConfig.url.replace(/\/+$/, "");
@@ -33,6 +34,7 @@ export class DokployClient {
         accept: "application/json",
         "x-api-key": this.apiToken,
       },
+      signal: AbortSignal.timeout(this.timeout),
     });
     if (!res.ok) {
       throw new DokployError(res.status, await res.json().catch(() => res.statusText));
@@ -52,6 +54,7 @@ export class DokployClient {
         "x-api-key": this.apiToken,
       },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(this.timeout),
     });
     if (!res.ok) {
       throw new DokployError(res.status, await res.json().catch(() => res.statusText));
