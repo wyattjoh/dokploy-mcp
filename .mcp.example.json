@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "dokploy": {
+      "command": "op",
+      "args": ["run", "--", "dokploy-mcp"],
+      "env": {
+        "DOKPLOY_PROD_API_TOKEN": "op://Development/dokploy-prod/credential",
+        "DOKPLOY_PROD_URL": "https://dokploy.example.com",
+        "DOKPLOY_STAGING_API_TOKEN": "op://Development/dokploy-staging/credential",
+        "DOKPLOY_STAGING_URL": "https://staging.dokploy.example.com"
+      }
+    }
+  }
+}
