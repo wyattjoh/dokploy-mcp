@@ -35,14 +35,14 @@ export function createServer(): McpServer {
 
   const server = new InstanceAwareServer(mcpServer);
 
-  registerProjects(server as any);
-  registerApplications(server as any);
-  registerDeployments(server as any);
-  registerDomains(server as any);
-  registerEnvironment(server as any);
-  registerBuild(server as any);
-  registerCompose(server as any);
-  registerOperational(server as any);
+  registerProjects(server);
+  registerApplications(server);
+  registerDeployments(server);
+  registerDomains(server);
+  registerEnvironment(server);
+  registerBuild(server);
+  registerCompose(server);
+  registerOperational(server);
 
   return mcpServer;
 }
