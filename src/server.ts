@@ -1,5 +1,9 @@
+import { createRequire } from "node:module";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { config } from "./config.js";
+
+const require = createRequire(import.meta.url);
+const { version } = require("../package.json") as { version: string };
 import { InstanceAwareServer } from "./instance-aware-server.js";
 import { register as registerProjects } from "./tools/projects.js";
 import { register as registerApplications } from "./tools/applications.js";
@@ -13,7 +17,7 @@ import { register as registerOperational } from "./tools/operational.js";
 export function createServer(): McpServer {
   const mcpServer = new McpServer({
     name: "dokploy-mcp",
-    version: "1.0.0",
+    version,
   });
 
   mcpServer.registerTool(
