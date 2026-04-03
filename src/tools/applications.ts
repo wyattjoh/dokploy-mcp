@@ -27,7 +27,7 @@ export function register(server: InstanceAwareServer): void {
     {
       title: "Get Application",
       description:
-        "Get full application config by ID. Returns all fields including env, buildArgs, buildSecrets, status, and git provider config.",
+        "Get application config by ID. Returns status, git provider config, and other fields. Environment variables and secrets are excluded; use dokploy_list_environment to access those.",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
       },
@@ -37,9 +37,10 @@ export function register(server: InstanceAwareServer): void {
       },
     },
     async ({ client, applicationId }) => {
-      const app = await client.getApplication(applicationId);
+      const app = (await client.getApplication(applicationId)) as Record<string, unknown>;
+      const { env: _env, buildArgs: _buildArgs, buildSecrets: _buildSecrets, ...safe } = app;
       return {
-        content: [{ type: "text" as const, text: JSON.stringify(app, null, 2) }],
+        content: [{ type: "text" as const, text: JSON.stringify(safe, null, 2) }],
       };
     },
   );
