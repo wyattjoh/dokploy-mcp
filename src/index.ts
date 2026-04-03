@@ -24,7 +24,7 @@ async function startStdio(): Promise<void> {
   console.error("dokploy-mcp: stdio transport ready");
 }
 
-async function startHttp(port: number): Promise<void> {
+async function startHttp(httpPort: number): Promise<void> {
   const server = createServer();
   const transport = new StreamableHTTPServerTransport({
     sessionIdGenerator: undefined, // Stateless
@@ -42,7 +42,7 @@ async function startHttp(port: number): Promise<void> {
     }
     try {
       await transport.handleRequest(req, res, req.body);
-    } catch (error) {
+    } catch {
       if (!res.headersSent) {
         res.status(500).json({
           jsonrpc: "2.0",
@@ -57,7 +57,7 @@ async function startHttp(port: number): Promise<void> {
     res.json({ status: "ok" });
   });
 
-  app.listen(port, () => {
-    console.error(`dokploy-mcp: HTTP transport ready on port ${port}`);
+  app.listen(httpPort, () => {
+    console.error(`dokploy-mcp: HTTP transport ready on port ${httpPort}`);
   });
 }

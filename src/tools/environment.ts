@@ -67,9 +67,18 @@ export function register(server: McpServer): void {
         "Set environment variables for an application. Merges with existing vars (existing keys are overwritten, new keys are added, unmentioned keys are preserved).",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
-        env: z.record(z.string()).optional().describe("Environment variables to set (KEY: VALUE)"),
-        buildArgs: z.record(z.string()).optional().describe("Build arguments to set (KEY: VALUE)"),
-        buildSecrets: z.record(z.string()).optional().describe("Build secrets to set (KEY: VALUE)"),
+        env: z
+          .record(z.string(), z.string())
+          .optional()
+          .describe("Environment variables to set (KEY: VALUE)"),
+        buildArgs: z
+          .record(z.string(), z.string())
+          .optional()
+          .describe("Build arguments to set (KEY: VALUE)"),
+        buildSecrets: z
+          .record(z.string(), z.string())
+          .optional()
+          .describe("Build secrets to set (KEY: VALUE)"),
         createEnvFile: z
           .boolean()
           .optional()
@@ -94,9 +103,9 @@ export function register(server: McpServer): void {
 
       await saveEnvironment({
         applicationId,
-        env: buildEnvString({ ...currentEnv, ...env }),
-        buildArgs: buildEnvString({ ...currentBuildArgs, ...buildArgs }),
-        buildSecrets: buildEnvString({ ...currentBuildSecrets, ...buildSecrets }),
+        env: buildEnvString({ ...currentEnv, ...(env ?? {}) }),
+        buildArgs: buildEnvString({ ...currentBuildArgs, ...(buildArgs ?? {}) }),
+        buildSecrets: buildEnvString({ ...currentBuildSecrets, ...(buildSecrets ?? {}) }),
         createEnvFile: createEnvFile ?? false,
       });
 

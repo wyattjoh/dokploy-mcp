@@ -70,7 +70,7 @@ export function register(server: McpServer): void {
         "Update application config fields. Only applicationId is required; all other fields are optional. Supports: name, appName, description, dockerfile, dockerContextPath, command, replicas, memoryLimit, cpuLimit, and more.",
       inputSchema: {
         applicationId: z.string().describe("The application ID"),
-        updates: z.record(z.unknown()).describe("Key-value pairs of fields to update"),
+        updates: z.record(z.string(), z.unknown()).describe("Key-value pairs of fields to update"),
       },
       annotations: {
         readOnlyHint: false,
