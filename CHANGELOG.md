@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.2.1...dokploy-mcp-v0.2.2) (2026-04-03)
+
+
+### Bug Fixes
+
+* **build:** move bundled deps to devDependencies ([ec98bb1](https://github.com/wyattjoh/dokploy-mcp/commit/ec98bb1b16c6504cb4ab32d083e4781f10fe11d1))
+
 ## [0.2.1](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.2.0...dokploy-mcp-v0.2.1) (2026-04-03)
 
 
