@@ -1,6 +1,5 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { InstanceAwareServer } from "../instance-aware-server.js";
 import { z } from "zod";
-import { getApplication, saveEnvironment } from "../client.js";
 
 function parseEnvString(env: string): Record<string, string> {
   const result: Record<string, string> = {};
@@ -20,7 +19,7 @@ function buildEnvString(vars: Record<string, string>): string {
     .join("\n");
 }
 
-export function register(server: McpServer): void {
+export function register(server: InstanceAwareServer): void {
   server.registerTool(
     "dokploy_list_environment",
     {
@@ -34,8 +33,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId }) => {
-      const app = (await getApplication(applicationId)) as {
+    async ({ client, applicationId }) => {
+      const app = (await client.getApplication(applicationId)) as {
         env: string;
         buildArgs: string;
         buildSecrets: string;
@@ -90,8 +89,8 @@ export function register(server: McpServer): void {
         idempotentHint: true,
       },
     },
-    async ({ applicationId, env, buildArgs, buildSecrets, createEnvFile }) => {
-      const app = (await getApplication(applicationId)) as {
+    async ({ client, applicationId, env, buildArgs, buildSecrets, createEnvFile }) => {
+      const app = (await client.getApplication(applicationId)) as {
         env: string;
         buildArgs: string;
         buildSecrets: string;
@@ -101,7 +100,7 @@ export function register(server: McpServer): void {
       const currentBuildArgs = parseEnvString(app.buildArgs ?? "");
       const currentBuildSecrets = parseEnvString(app.buildSecrets ?? "");
 
-      await saveEnvironment({
+      await client.saveEnvironment({
         applicationId,
         env: buildEnvString({ ...currentEnv, ...(env ?? {}) }),
         buildArgs: buildEnvString({ ...currentBuildArgs, ...(buildArgs ?? {}) }),
@@ -129,8 +128,8 @@ export function register(server: McpServer): void {
         destructiveHint: true,
       },
     },
-    async ({ applicationId, keys }) => {
-      const app = (await getApplication(applicationId)) as {
+    async ({ client, applicationId, keys }) => {
+      const app = (await client.getApplication(applicationId)) as {
         env: string;
         buildArgs: string;
         buildSecrets: string;
@@ -141,7 +140,7 @@ export function register(server: McpServer): void {
         delete currentEnv[key];
       }
 
-      await saveEnvironment({
+      await client.saveEnvironment({
         applicationId,
         env: buildEnvString(currentEnv),
         buildArgs: app.buildArgs ?? "",

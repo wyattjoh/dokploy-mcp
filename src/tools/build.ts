@@ -1,8 +1,7 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { InstanceAwareServer } from "../instance-aware-server.js";
 import { z } from "zod";
-import { saveBuildType, saveGithubProvider } from "../client.js";
 
-export function register(server: McpServer): void {
+export function register(server: InstanceAwareServer): void {
   server.registerTool(
     "dokploy_save_build_type",
     {
@@ -39,8 +38,8 @@ export function register(server: McpServer): void {
         idempotentHint: true,
       },
     },
-    async (args) => {
-      await saveBuildType(args);
+    async ({ client, ...args }) => {
+      await client.saveBuildType(args);
       return {
         content: [{ type: "text" as const, text: "Build type saved successfully." }],
       };
@@ -70,8 +69,8 @@ export function register(server: McpServer): void {
         idempotentHint: true,
       },
     },
-    async (args) => {
-      await saveGithubProvider(args);
+    async ({ client, ...args }) => {
+      await client.saveGithubProvider(args);
       return {
         content: [{ type: "text" as const, text: "GitHub provider saved successfully." }],
       };

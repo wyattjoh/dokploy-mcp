@@ -1,16 +1,7 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { InstanceAwareServer } from "../instance-aware-server.js";
 import { z } from "zod";
-import {
-  getContainers,
-  readAppMonitoring,
-  redeployApplication,
-  cancelDeployment,
-  killBuild,
-  getDokployVersion,
-  listServers,
-} from "../client.js";
 
-export function register(server: McpServer): void {
+export function register(server: InstanceAwareServer): void {
   server.registerTool(
     "dokploy_get_containers",
     {
@@ -24,8 +15,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ serverId }) => {
-      const containers = await getContainers(serverId);
+    async ({ client, serverId }) => {
+      const containers = await client.getContainers(serverId);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(containers, null, 2) }],
       };
@@ -45,8 +36,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ appName }) => {
-      const metrics = await readAppMonitoring(appName);
+    async ({ client, appName }) => {
+      const metrics = await client.readAppMonitoring(appName);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(metrics, null, 2) }],
       };
@@ -68,8 +59,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId, title, description }) => {
-      await redeployApplication({ applicationId, title, description });
+    async ({ client, applicationId, title, description }) => {
+      await client.redeployApplication({ applicationId, title, description });
       return {
         content: [
           { type: "text" as const, text: "Application redeployment triggered successfully." },
@@ -91,8 +82,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId }) => {
-      await cancelDeployment(applicationId);
+    async ({ client, applicationId }) => {
+      await client.cancelDeployment(applicationId);
       return {
         content: [{ type: "text" as const, text: "Deployment cancelled successfully." }],
       };
@@ -112,8 +103,8 @@ export function register(server: McpServer): void {
         destructiveHint: true,
       },
     },
-    async ({ applicationId }) => {
-      await killBuild(applicationId);
+    async ({ client, applicationId }) => {
+      await client.killBuild(applicationId);
       return {
         content: [{ type: "text" as const, text: "Build killed successfully." }],
       };
@@ -131,8 +122,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async () => {
-      const version = await getDokployVersion();
+    async ({ client }) => {
+      const version = await client.getDokployVersion();
       return {
         content: [{ type: "text" as const, text: JSON.stringify(version, null, 2) }],
       };
@@ -150,8 +141,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async () => {
-      const servers = await listServers();
+    async ({ client }) => {
+      const servers = await client.listServers();
       return {
         content: [{ type: "text" as const, text: JSON.stringify(servers, null, 2) }],
       };

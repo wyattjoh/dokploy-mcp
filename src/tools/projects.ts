@@ -1,7 +1,6 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { listProjects } from "../client.js";
+import type { InstanceAwareServer } from "../instance-aware-server.js";
 
-export function register(server: McpServer): void {
+export function register(server: InstanceAwareServer): void {
   server.registerTool(
     "dokploy_list_projects",
     {
@@ -12,8 +11,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async () => {
-      const projects = await listProjects();
+    async ({ client }) => {
+      const projects = await client.listProjects();
       return {
         content: [{ type: "text" as const, text: JSON.stringify(projects, null, 2) }],
       };

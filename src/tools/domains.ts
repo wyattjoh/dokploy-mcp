@@ -1,8 +1,7 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { InstanceAwareServer } from "../instance-aware-server.js";
 import { z } from "zod";
-import { listDomains, createDomain } from "../client.js";
 
-export function register(server: McpServer): void {
+export function register(server: InstanceAwareServer): void {
   server.registerTool(
     "dokploy_list_domains",
     {
@@ -16,8 +15,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId }) => {
-      const domains = await listDomains(applicationId);
+    async ({ client, applicationId }) => {
+      const domains = await client.listDomains(applicationId);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(domains, null, 2) }],
       };
@@ -45,8 +44,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId, host, https, port, path, certificateType }) => {
-      const domain = await createDomain({
+    async ({ client, applicationId, host, https, port, path, certificateType }) => {
+      const domain = await client.createDomain({
         applicationId,
         host,
         https,

@@ -1,15 +1,7 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { InstanceAwareServer } from "../instance-aware-server.js";
 import { z } from "zod";
-import {
-  listAllApplications,
-  getApplication,
-  updateApplication,
-  deployApplication,
-  startApplication,
-  stopApplication,
-} from "../client.js";
 
-export function register(server: McpServer): void {
+export function register(server: InstanceAwareServer): void {
   server.registerTool(
     "dokploy_list_applications",
     {
@@ -22,8 +14,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async () => {
-      const apps = await listAllApplications();
+    async ({ client }) => {
+      const apps = await client.listAllApplications();
       return {
         content: [{ type: "text" as const, text: JSON.stringify(apps, null, 2) }],
       };
@@ -44,8 +36,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId }) => {
-      const app = await getApplication(applicationId);
+    async ({ client, applicationId }) => {
+      const app = await client.getApplication(applicationId);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(app, null, 2) }],
       };
@@ -68,8 +60,8 @@ export function register(server: McpServer): void {
         idempotentHint: true,
       },
     },
-    async ({ applicationId, updates }) => {
-      await updateApplication({ applicationId, ...updates });
+    async ({ client, applicationId, updates }) => {
+      await client.updateApplication({ applicationId, ...updates });
       return {
         content: [{ type: "text" as const, text: "Application updated successfully." }],
       };
@@ -91,8 +83,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId, title, description }) => {
-      await deployApplication({ applicationId, title, description });
+    async ({ client, applicationId, title, description }) => {
+      await client.deployApplication({ applicationId, title, description });
       return {
         content: [{ type: "text" as const, text: "Deployment triggered successfully." }],
       };
@@ -112,8 +104,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ applicationId }) => {
-      await startApplication(applicationId);
+    async ({ client, applicationId }) => {
+      await client.startApplication(applicationId);
       return {
         content: [{ type: "text" as const, text: "Application started successfully." }],
       };
@@ -133,8 +125,8 @@ export function register(server: McpServer): void {
         destructiveHint: true,
       },
     },
-    async ({ applicationId }) => {
-      await stopApplication(applicationId);
+    async ({ client, applicationId }) => {
+      await client.stopApplication(applicationId);
       return {
         content: [{ type: "text" as const, text: "Application stopped successfully." }],
       };

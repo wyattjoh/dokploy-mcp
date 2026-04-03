@@ -1,18 +1,7 @@
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import type { InstanceAwareServer } from "../instance-aware-server.js";
 import { z } from "zod";
-import {
-  getCompose,
-  deployCompose,
-  redeployCompose,
-  startCompose,
-  stopCompose,
-  updateCompose,
-  loadComposeServices,
-  listComposeDeployments,
-  listComposeDomains,
-} from "../client.js";
 
-export function register(server: McpServer): void {
+export function register(server: InstanceAwareServer): void {
   server.registerTool(
     "dokploy_get_compose",
     {
@@ -26,8 +15,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ composeId }) => {
-      const result = await getCompose(composeId);
+    async ({ client, composeId }) => {
+      const result = await client.getCompose(composeId);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
       };
@@ -49,8 +38,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ composeId, title, description }) => {
-      await deployCompose({ composeId, title, description });
+    async ({ client, composeId, title, description }) => {
+      await client.deployCompose({ composeId, title, description });
       return {
         content: [{ type: "text" as const, text: "Compose deployment triggered successfully." }],
       };
@@ -72,8 +61,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ composeId, title, description }) => {
-      await redeployCompose({ composeId, title, description });
+    async ({ client, composeId, title, description }) => {
+      await client.redeployCompose({ composeId, title, description });
       return {
         content: [{ type: "text" as const, text: "Compose redeployment triggered successfully." }],
       };
@@ -93,8 +82,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ composeId }) => {
-      await startCompose(composeId);
+    async ({ client, composeId }) => {
+      await client.startCompose(composeId);
       return {
         content: [{ type: "text" as const, text: "Compose stack started successfully." }],
       };
@@ -114,8 +103,8 @@ export function register(server: McpServer): void {
         destructiveHint: true,
       },
     },
-    async ({ composeId }) => {
-      await stopCompose(composeId);
+    async ({ client, composeId }) => {
+      await client.stopCompose(composeId);
       return {
         content: [{ type: "text" as const, text: "Compose stack stopped successfully." }],
       };
@@ -138,8 +127,8 @@ export function register(server: McpServer): void {
         idempotentHint: true,
       },
     },
-    async ({ composeId, updates }) => {
-      await updateCompose({ composeId, ...updates });
+    async ({ client, composeId, updates }) => {
+      await client.updateCompose({ composeId, ...updates });
       return {
         content: [{ type: "text" as const, text: "Compose stack updated successfully." }],
       };
@@ -159,8 +148,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ composeId }) => {
-      const services = await loadComposeServices(composeId);
+    async ({ client, composeId }) => {
+      const services = await client.loadComposeServices(composeId);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(services, null, 2) }],
       };
@@ -180,8 +169,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ composeId }) => {
-      const deployments = await listComposeDeployments(composeId);
+    async ({ client, composeId }) => {
+      const deployments = await client.listComposeDeployments(composeId);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(deployments, null, 2) }],
       };
@@ -201,8 +190,8 @@ export function register(server: McpServer): void {
         destructiveHint: false,
       },
     },
-    async ({ composeId }) => {
-      const domains = await listComposeDomains(composeId);
+    async ({ client, composeId }) => {
+      const domains = await client.listComposeDomains(composeId);
       return {
         content: [{ type: "text" as const, text: JSON.stringify(domains, null, 2) }],
       };
