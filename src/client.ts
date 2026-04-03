@@ -53,10 +53,18 @@ export function listProjects(): Promise<unknown[]> {
 
 // --- Applications ---
 
-export function searchApplications(
-  params?: Record<string, string>,
-): Promise<{ items: unknown[]; total: number }> {
-  return get<{ items: unknown[]; total: number }>("application.search", params);
+export function listAllApplications(): Promise<unknown[]> {
+  return get<unknown[]>("project.all").then((projects: any[]) => {
+    const apps: unknown[] = [];
+    for (const project of projects) {
+      for (const env of project.environments ?? []) {
+        for (const app of env.applications ?? []) {
+          apps.push({ ...app, projectName: project.name, environmentName: env.name });
+        }
+      }
+    }
+    return apps;
+  });
 }
 
 export function getApplication(applicationId: string): Promise<unknown> {
@@ -145,4 +153,85 @@ export function saveGithubProvider(body: {
   triggerType?: "push" | "tag";
 }): Promise<true> {
   return post<true>("application.saveGithubProvider", body);
+}
+
+// --- Compose ---
+
+export function getCompose(composeId: string): Promise<unknown> {
+  return get<unknown>("compose.one", { composeId });
+}
+
+export function deployCompose(body: {
+  composeId: string;
+  title?: string;
+  description?: string;
+}): Promise<true> {
+  return post<true>("compose.deploy", body);
+}
+
+export function redeployCompose(body: {
+  composeId: string;
+  title?: string;
+  description?: string;
+}): Promise<true> {
+  return post<true>("compose.redeploy", body);
+}
+
+export function startCompose(composeId: string): Promise<unknown> {
+  return post<unknown>("compose.start", { composeId });
+}
+
+export function stopCompose(composeId: string): Promise<unknown> {
+  return post<unknown>("compose.stop", { composeId });
+}
+
+export function updateCompose(body: { composeId: string; [key: string]: unknown }): Promise<true> {
+  return post<true>("compose.update", body);
+}
+
+export function loadComposeServices(composeId: string): Promise<unknown[]> {
+  return get<unknown[]>("compose.loadServices", { composeId });
+}
+
+export function listComposeDeployments(composeId: string): Promise<unknown[]> {
+  return get<unknown[]>("deployment.allByCompose", { composeId });
+}
+
+export function listComposeDomains(composeId: string): Promise<unknown[]> {
+  return get<unknown[]>("domain.byComposeId", { composeId });
+}
+
+// --- Operational ---
+
+export function getContainers(serverId?: string): Promise<unknown[]> {
+  const params = serverId ? { serverId } : undefined;
+  return get<unknown[]>("docker.getContainers", params);
+}
+
+export function readAppMonitoring(appName: string): Promise<unknown> {
+  return get<unknown>("application.readAppMonitoring", { appName });
+}
+
+export function redeployApplication(body: {
+  applicationId: string;
+  title?: string;
+  description?: string;
+}): Promise<true> {
+  return post<true>("application.redeploy", body);
+}
+
+export function cancelDeployment(applicationId: string): Promise<unknown> {
+  return post<unknown>("application.cancelDeployment", { applicationId });
+}
+
+export function killBuild(applicationId: string): Promise<unknown> {
+  return post<unknown>("application.killBuild", { applicationId });
+}
+
+export function getDokployVersion(): Promise<unknown> {
+  return get<unknown>("settings.getDokployVersion");
+}
+
+export function listServers(): Promise<unknown[]> {
+  return get<unknown[]>("server.all");
 }

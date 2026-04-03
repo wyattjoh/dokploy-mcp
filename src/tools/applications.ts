@@ -1,7 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import {
-  searchApplications,
+  listAllApplications,
   getApplication,
   updateApplication,
   deployApplication,
@@ -15,27 +15,17 @@ export function register(server: McpServer): void {
     {
       title: "List Applications",
       description:
-        "Search and list applications. All filter parameters are optional. Returns paginated results.",
-      inputSchema: {
-        projectId: z.string().optional().describe("Filter by project ID"),
-        name: z.string().optional().describe("Filter by application name"),
-        limit: z.number().min(1).max(100).optional().describe("Max results (1-100, default 20)"),
-        offset: z.number().optional().describe("Offset for pagination"),
-      },
+        "List all applications across all projects and environments. Returns each application with its projectName and environmentName.",
+      inputSchema: {},
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
       },
     },
-    async (args) => {
-      const params: Record<string, string> = {};
-      if (args.projectId) params.projectId = args.projectId;
-      if (args.name) params.name = args.name;
-      if (args.limit) params.limit = String(args.limit);
-      if (args.offset) params.offset = String(args.offset);
-      const result = await searchApplications(params);
+    async () => {
+      const apps = await listAllApplications();
       return {
-        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+        content: [{ type: "text" as const, text: JSON.stringify(apps, null, 2) }],
       };
     },
   );

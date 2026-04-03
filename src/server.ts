@@ -5,6 +5,8 @@ import { register as registerDeployments } from "./tools/deployments.js";
 import { register as registerDomains } from "./tools/domains.js";
 import { register as registerEnvironment } from "./tools/environment.js";
 import { register as registerBuild } from "./tools/build.js";
+import { register as registerCompose } from "./tools/compose.js";
+import { register as registerOperational } from "./tools/operational.js";
 
 export function createServer(): McpServer {
   const server = new McpServer({
@@ -18,6 +20,8 @@ export function createServer(): McpServer {
   registerDomains(server);
   registerEnvironment(server);
   registerBuild(server);
+  registerCompose(server);
+  registerOperational(server);
 
   return server;
 }
