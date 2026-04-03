@@ -1,0 +1,6 @@
+{
+  "dokploy": {
+    "command": "npx",
+    "args": ["-y", "@wyattjoh/dokploy-mcp"]
+  }
+}

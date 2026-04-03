@@ -1,0 +1,8 @@
+{
+  "name": "dokploy-mcp",
+  "version": "0.3.0",
+  "description": "MCP server that wraps the Dokploy REST API",
+  "author": {
+    "name": "Wyatt Johnson"
+  }
+}
