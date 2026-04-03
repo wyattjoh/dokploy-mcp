@@ -4,7 +4,6 @@ import { createServer } from "./server.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
-import { config } from "./config.js";
 import { validateBearerToken } from "./auth.js";
 
 const args = process.argv.slice(2);
@@ -36,7 +35,7 @@ async function startHttp(httpPort: number): Promise<void> {
   app.use(express.json());
 
   app.post("/mcp", async (req, res) => {
-    const authorized = validateBearerToken(req.headers.authorization ?? null, config.apiToken);
+    const authorized = validateBearerToken(req.headers.authorization ?? null);
     if (!authorized) {
       res.status(401).json({ error: "Unauthorized" });
       return;
