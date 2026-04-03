@@ -37,6 +37,9 @@ export class DokployClient {
     if (!res.ok) {
       throw new DokployError(res.status, await res.json().catch(() => res.statusText));
     }
+    if (res.status === 204 || res.headers.get("content-length") === "0") {
+      return undefined as T;
+    }
     return (await res.json()) as T;
   }
 
@@ -52,6 +55,9 @@ export class DokployClient {
     });
     if (!res.ok) {
       throw new DokployError(res.status, await res.json().catch(() => res.statusText));
+    }
+    if (res.status === 204 || res.headers.get("content-length") === "0") {
+      return undefined as T;
     }
     return (await res.json()) as T;
   }
