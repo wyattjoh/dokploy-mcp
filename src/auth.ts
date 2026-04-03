@@ -1,4 +1,4 @@
-import { timingSafeEqual } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 
 const mcpToken = process.env.DOKPLOY_MCP_TOKEN?.trim() || undefined;
 
@@ -7,9 +7,7 @@ export function getMcpToken(): string | undefined {
 }
 
 function sha256(input: string): Buffer {
-  const hasher = new Bun.CryptoHasher("sha256");
-  hasher.update(input);
-  return hasher.digest() as Buffer;
+  return createHash("sha256").update(input).digest();
 }
 
 export function validateBearerToken(authHeader: string | null): boolean {
