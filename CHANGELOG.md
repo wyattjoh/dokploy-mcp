@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.1](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.2.0...dokploy-mcp-v0.2.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **apps:** redact env and secrets from get_application response ([cf60309](https://github.com/wyattjoh/dokploy-mcp/commit/cf60309dcda8ac03599b635fef06ca6a44d66309))
+* **auth:** replace Bun.CryptoHasher with node:crypto createHash ([c95b6b3](https://github.com/wyattjoh/dokploy-mcp/commit/c95b6b3d3af3b514a9880a2639d970377f753eb1))
+* **client:** add 30s timeout to outbound Dokploy API requests ([91f32d1](https://github.com/wyattjoh/dokploy-mcp/commit/91f32d17075a09349465873e7ad763d2b6c23050))
+* **client:** handle 204 No Content and empty API responses ([271482f](https://github.com/wyattjoh/dokploy-mcp/commit/271482f7cf1473ab8ecce3c43d57ba8ea4ca5a5e))
+* **env:** preserve createEnvFile value during environment updates ([19cce8e](https://github.com/wyattjoh/dokploy-mcp/commit/19cce8e94eabd1cb488d73bce94deda3c1fa6fa1))
+* **server:** read version from package.json instead of hardcoding 1.0.0 ([fb4a3da](https://github.com/wyattjoh/dokploy-mcp/commit/fb4a3dabdf01d7bc68eb835db2c0c628ced75d5c))
+
 ## [0.2.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.1.0...dokploy-mcp-v0.2.0) (2026-04-03)
 
 
