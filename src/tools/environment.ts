@@ -94,6 +94,7 @@ export function register(server: InstanceAwareServer): void {
         env: string;
         buildArgs: string;
         buildSecrets: string;
+        createEnvFile: boolean;
       };
 
       const currentEnv = parseEnvString(app.env ?? "");
@@ -105,7 +106,7 @@ export function register(server: InstanceAwareServer): void {
         env: buildEnvString({ ...currentEnv, ...(env ?? {}) }),
         buildArgs: buildEnvString({ ...currentBuildArgs, ...(buildArgs ?? {}) }),
         buildSecrets: buildEnvString({ ...currentBuildSecrets, ...(buildSecrets ?? {}) }),
-        createEnvFile: createEnvFile ?? false,
+        createEnvFile: createEnvFile ?? app.createEnvFile ?? false,
       });
 
       return {
@@ -133,6 +134,7 @@ export function register(server: InstanceAwareServer): void {
         env: string;
         buildArgs: string;
         buildSecrets: string;
+        createEnvFile: boolean;
       };
 
       const currentEnv = parseEnvString(app.env ?? "");
@@ -145,7 +147,7 @@ export function register(server: InstanceAwareServer): void {
         env: buildEnvString(currentEnv),
         buildArgs: app.buildArgs ?? "",
         buildSecrets: app.buildSecrets ?? "",
-        createEnvFile: false,
+        createEnvFile: app.createEnvFile ?? false,
       });
 
       return {
