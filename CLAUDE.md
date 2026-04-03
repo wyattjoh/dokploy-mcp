@@ -22,33 +22,40 @@ After code changes, run: `bunx oxlint src/ && bunx oxfmt src/ && bunx tsc --noEm
 
 ## Architecture
 
-**Dual transport MCP server.** A single `DOKPLOY_API_TOKEN` env var (injected via `op run` at startup) authenticates both client connections (bearer token for HTTP) and outbound Dokploy API calls (`x-api-key` header).
+**Dual transport MCP server.** Supports single-instance and multi-instance modes.
+
+**Single instance:** Set `DOKPLOY_API_TOKEN` (and optionally `DOKPLOY_URL`). Tools have no `instance` parameter.
+
+**Multi-instance:** Set `DOKPLOY_<NAME>_API_TOKEN` and `DOKPLOY_<NAME>_URL` for each instance (e.g., `DOKPLOY_PROD_API_TOKEN`). Instance names are derived by lowercasing the segment between `DOKPLOY_` and `_API_TOKEN`. Tools gain a required `instance` parameter.
+
+The two modes are mutually exclusive. `DOKPLOY_MCP_TOKEN` is required for HTTP transport (bearer auth), decoupled from instance tokens.
 
 ```
-src/index.ts     Entry point: CLI arg parsing (--http, --port), transport selection
-src/server.ts    Creates McpServer, registers all tool modules
-src/config.ts    Validates DOKPLOY_API_TOKEN at startup, exports config
-src/auth.ts      Timing-safe bearer token validation (HTTP transport only)
-src/client.ts    Dokploy API client: typed get/post wrappers for all endpoints
-src/tools/       One file per domain, each exports register(server: McpServer)
+src/index.ts                 Entry point: CLI arg parsing (--http, --port), transport selection
+src/server.ts                Creates McpServer, registers all tool modules
+src/config.ts                Instance discovery, env var scanning, validation
+src/auth.ts                  Timing-safe bearer token validation (HTTP transport only)
+src/client.ts                DokployClient class with typed API methods, getClient() factory
+src/instance-aware-server.ts Wraps McpServer, auto-injects instance param in multi mode
+src/tools/                   One file per domain, each exports register(server: InstanceAwareServer)
 ```
 
 ### Adding a new tool
 
-1. Add the client function to `src/client.ts` (GET uses `get()`, POST uses `post()`)
-2. Register the tool in the appropriate `src/tools/*.ts` file (or create a new one)
+1. Add the method to the `DokployClient` class in `src/client.ts` (GET uses `get()`, POST uses `post()`)
+2. Register the tool in the appropriate `src/tools/*.ts` file (or create a new one). Use `client` from handler args.
 3. If new tool file, import and call its `register()` in `src/server.ts`
 
 ### Tool module pattern
 
-Every file in `src/tools/` exports a single `register(server: McpServer)` function that calls `server.registerTool()` for each tool. Read-only tools use `annotations: { readOnlyHint: true, destructiveHint: false }`.
+Every file in `src/tools/` exports a single `register(server: InstanceAwareServer)` function that calls `server.registerTool()` for each tool. Handlers receive a `client: DokployClient` in their args (injected by the wrapper). Read-only tools use `annotations: { readOnlyHint: true, destructiveHint: false }`.
 
 ### Dokploy API conventions
 
 - tRPC-style endpoints at `/api/<router>.<action>` (e.g., `application.deploy`)
 - GET for queries (params as query string), POST for mutations (JSON body)
 - Auth via `x-api-key` header
-- Base URL defaults to `https://dokploy.wyattjoh.dev/api`, overridable via `DOKPLOY_URL`
+- Base URL defaults to `https://dokploy.wyattjoh.dev/api` in single-instance mode, required per instance in multi-instance mode
 - No `application.all` endpoint exists; apps are extracted from `project.all` response
 - Environment variables stored as newline-delimited `KEY=VALUE` strings, not structured objects
 
