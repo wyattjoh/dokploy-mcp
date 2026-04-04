@@ -4,5 +4,11 @@
   "description": "MCP server that wraps the Dokploy REST API",
   "author": {
     "name": "Wyatt Johnson"
+  },
+  "mcpServers": {
+    "dokploy": {
+      "command": "npx",
+      "args": ["@wyattjoh/dokploy-mcp@0.3.0"]
+    }
   }
 }
