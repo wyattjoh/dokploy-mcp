@@ -9,7 +9,7 @@
     "dokploy": {
       "command": "npx",
       "args": [
-        "@wyattjoh/dokploy-mcp@0.3.0"
+        "@wyattjoh/dokploy-mcp@0.4.0"
       ]
     }
   }
