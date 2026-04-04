@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.3.0...dokploy-mcp-v0.4.0) (2026-04-04)
+
+
+### Features
+
+* add marketplace update step to release workflow ([53f0b29](https://github.com/wyattjoh/dokploy-mcp/commit/53f0b2993ffa3cb7727a88c6db0c568d6a645cd7))
+* add MCP server to plugin and auto-sync version on release ([4074c2d](https://github.com/wyattjoh/dokploy-mcp/commit/4074c2d9d5ab02421f15d17c395bdb071f367698))
+
 ## [0.3.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.2.2...dokploy-mcp-v0.3.0) (2026-04-03)
 
 
