@@ -8,9 +8,7 @@
   "mcpServers": {
     "dokploy": {
       "command": "npx",
-      "args": [
-        "@wyattjoh/dokploy-mcp@0.4.1"
-      ]
+      "args": ["@wyattjoh/dokploy-mcp@0.4.1"]
     }
   }
 }

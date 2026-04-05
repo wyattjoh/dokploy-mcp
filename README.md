@@ -25,10 +25,10 @@ two modes are mutually exclusive.
 
 Set a single Dokploy API token. All tools operate against one Dokploy server.
 
-| Variable | Required | Description |
-| --- | --- | --- |
-| `DOKPLOY_API_TOKEN` | Yes | API token for your Dokploy instance |
-| `DOKPLOY_URL` | No | Base URL (defaults to `https://dokploy.wyattjoh.dev`) |
+| Variable            | Required | Description                                           |
+| ------------------- | -------- | ----------------------------------------------------- |
+| `DOKPLOY_API_TOKEN` | Yes      | API token for your Dokploy instance                   |
+| `DOKPLOY_URL`       | No       | Base URL (defaults to `https://dokploy.wyattjoh.dev`) |
 
 ### Multi-instance
 
@@ -57,8 +57,8 @@ DOKPLOY_STAGING_URL=https://staging-dokploy.example.com
 By default the server uses stdio transport (for Claude Code and similar
 clients). Pass `--http` to start an HTTP server instead.
 
-| Variable | Required | Description |
-| --- | --- | --- |
+| Variable            | Required        | Description                                 |
+| ------------------- | --------------- | ------------------------------------------- |
 | `DOKPLOY_MCP_TOKEN` | Yes (HTTP only) | Bearer token for authenticating MCP clients |
 
 ```bash
@@ -158,75 +158,75 @@ For HTTP transport with 1Password:
 
 ### Projects
 
-| Tool | Description |
-| --- | --- |
+| Tool                     | Description                           |
+| ------------------------ | ------------------------------------- |
 | `dokploy_list_instances` | List all configured Dokploy instances |
-| `dokploy_list_projects` | List all projects |
+| `dokploy_list_projects`  | List all projects                     |
 
 ### Applications
 
-| Tool | Description |
-| --- | --- |
-| `dokploy_list_applications` | List all applications (filtered from projects) |
-| `dokploy_get_application` | Get full application config by ID |
-| `dokploy_update_application` | Update application config fields |
-| `dokploy_deploy` | Trigger a deployment |
-| `dokploy_start_application` | Start an application |
-| `dokploy_stop_application` | Stop an application |
+| Tool                         | Description                                    |
+| ---------------------------- | ---------------------------------------------- |
+| `dokploy_list_applications`  | List all applications (filtered from projects) |
+| `dokploy_get_application`    | Get full application config by ID              |
+| `dokploy_update_application` | Update application config fields               |
+| `dokploy_deploy`             | Trigger a deployment                           |
+| `dokploy_start_application`  | Start an application                           |
+| `dokploy_stop_application`   | Stop an application                            |
 
 ### Compose
 
-| Tool | Description |
-| --- | --- |
-| `dokploy_get_compose` | Get compose stack config by ID |
-| `dokploy_deploy_compose` | Deploy a compose stack |
-| `dokploy_redeploy_compose` | Redeploy a compose stack |
-| `dokploy_start_compose` | Start a compose stack |
-| `dokploy_stop_compose` | Stop a compose stack |
-| `dokploy_update_compose` | Update compose stack config |
-| `dokploy_list_compose_services` | List services in a compose stack |
+| Tool                               | Description                          |
+| ---------------------------------- | ------------------------------------ |
+| `dokploy_get_compose`              | Get compose stack config by ID       |
+| `dokploy_deploy_compose`           | Deploy a compose stack               |
+| `dokploy_redeploy_compose`         | Redeploy a compose stack             |
+| `dokploy_start_compose`            | Start a compose stack                |
+| `dokploy_stop_compose`             | Stop a compose stack                 |
+| `dokploy_update_compose`           | Update compose stack config          |
+| `dokploy_list_compose_services`    | List services in a compose stack     |
 | `dokploy_list_compose_deployments` | List deployments for a compose stack |
-| `dokploy_list_compose_domains` | List domains for a compose stack |
+| `dokploy_list_compose_domains`     | List domains for a compose stack     |
 
 ### Deployments
 
-| Tool | Description |
-| --- | --- |
+| Tool                       | Description                         |
+| -------------------------- | ----------------------------------- |
 | `dokploy_list_deployments` | List deployments for an application |
 
 ### Domains
 
-| Tool | Description |
-| --- | --- |
-| `dokploy_list_domains` | List domains for an application |
-| `dokploy_create_domain` | Add a domain to an application |
+| Tool                    | Description                     |
+| ----------------------- | ------------------------------- |
+| `dokploy_list_domains`  | List domains for an application |
+| `dokploy_create_domain` | Add a domain to an application  |
 
 ### Environment
 
-| Tool | Description |
-| --- | --- |
-| `dokploy_list_environment` | List environment variables for an application |
+| Tool                         | Description                                     |
+| ---------------------------- | ----------------------------------------------- |
+| `dokploy_list_environment`   | List environment variables for an application   |
 | `dokploy_update_environment` | Set environment variables (merge with existing) |
-| `dokploy_delete_environment` | Remove environment variables by key |
+| `dokploy_delete_environment` | Remove environment variables by key             |
 
 ### Build
 
-| Tool | Description |
-| --- | --- |
-| `dokploy_save_build_type` | Update build configuration |
+| Tool                           | Description                        |
+| ------------------------------ | ---------------------------------- |
+| `dokploy_save_build_type`      | Update build configuration         |
 | `dokploy_save_github_provider` | Update GitHub source configuration |
 
 ### Operational
 
-| Tool | Description |
-| --- | --- |
-| `dokploy_get_containers` | List Docker containers |
-| `dokploy_get_app_monitoring` | Get application monitoring data |
-| `dokploy_redeploy_application` | Redeploy an application |
-| `dokploy_cancel_deployment` | Cancel a running deployment |
-| `dokploy_kill_build` | Kill a running build |
-| `dokploy_get_version` | Get the Dokploy server version |
-| `dokploy_list_servers` | List all configured servers |
+| Tool                           | Description                     |
+| ------------------------------ | ------------------------------- |
+| `dokploy_get_containers`       | List Docker containers          |
+| `dokploy_get_app_monitoring`   | Get application monitoring data |
+| `dokploy_redeploy_application` | Redeploy an application         |
+| `dokploy_cancel_deployment`    | Cancel a running deployment     |
+| `dokploy_kill_build`           | Kill a running build            |
+| `dokploy_get_version`          | Get the Dokploy server version  |
+| `dokploy_list_servers`         | List all configured servers     |
 
 ## Development
 
