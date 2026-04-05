@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.5.0...dokploy-mcp-v0.5.1) (2026-04-05)
+
+
+### Bug Fixes
+
+* **ci:** exclude CHANGELOG.md from oxfmt checks ([756920f](https://github.com/wyattjoh/dokploy-mcp/commit/756920f9724bdb01c94eaad6f80afd424b4bd2e8))
+
 ## [0.5.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.4.1...dokploy-mcp-v0.5.0) (2026-04-05)
 
 
