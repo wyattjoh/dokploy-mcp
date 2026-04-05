@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.4.0...dokploy-mcp-v0.4.1) (2026-04-05)
+
+
+### Bug Fixes
+
+* use release-please extra-files for plugin.json args version sync ([68f37c3](https://github.com/wyattjoh/dokploy-mcp/commit/68f37c34079ff1df1a66ade2b24c1e65089ce2b4))
+
 ## [0.4.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.3.0...dokploy-mcp-v0.4.0) (2026-04-04)
 
 
