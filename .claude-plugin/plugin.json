@@ -7,10 +7,14 @@
   },
   "userConfig": {
     "dokploy_api_token": {
+      "title": "Dokploy API Token",
+      "type": "string",
       "description": "Dokploy API token for authentication",
       "sensitive": true
     },
     "dokploy_url": {
+      "title": "Dokploy URL",
+      "type": "string",
       "description": "Dokploy instance URL (optional, defaults to https://dokploy.wyattjoh.dev)",
       "sensitive": false
     }
