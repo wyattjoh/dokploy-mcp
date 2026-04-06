@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.6.0...dokploy-mcp-v0.6.1) (2026-04-06)
+
+
+### Bug Fixes
+
+* add required type and title fields to userConfig entries ([938b0ef](https://github.com/wyattjoh/dokploy-mcp/commit/938b0efe62922ddc29611cc617110ae16e77fa95))
+
 ## [0.6.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.5.1...dokploy-mcp-v0.6.0) (2026-04-06)
 
 

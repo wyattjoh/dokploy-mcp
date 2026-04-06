@@ -1,6 +1,6 @@
 {
   "name": "dokploy-mcp",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "MCP server that wraps the Dokploy REST API",
   "author": {
     "name": "Wyatt Johnson"
@@ -23,7 +23,7 @@
     "dokploy": {
       "command": "npx",
       "args": [
-        "@wyattjoh/dokploy-mcp@0.6.0"
+        "@wyattjoh/dokploy-mcp@0.6.1"
       ],
       "env": {
         "DOKPLOY_API_TOKEN": "${user_config.dokploy_api_token}",
