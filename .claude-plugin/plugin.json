@@ -5,12 +5,26 @@
   "author": {
     "name": "Wyatt Johnson"
   },
+  "userConfig": {
+    "dokploy_api_token": {
+      "description": "Dokploy API token for authentication",
+      "sensitive": true
+    },
+    "dokploy_url": {
+      "description": "Dokploy instance URL (optional, defaults to https://dokploy.wyattjoh.dev)",
+      "sensitive": false
+    }
+  },
   "mcpServers": {
     "dokploy": {
       "command": "npx",
       "args": [
         "@wyattjoh/dokploy-mcp@0.5.1"
-      ]
+      ],
+      "env": {
+        "DOKPLOY_API_TOKEN": "${user_config.dokploy_api_token}",
+        "DOKPLOY_URL": "${user_config.dokploy_url}"
+      }
     }
   }
 }
