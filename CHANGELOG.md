@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.5.1...dokploy-mcp-v0.6.0) (2026-04-06)
+
+
+### Features
+
+* add userConfig for Dokploy credentials in plugin manifest ([edec15f](https://github.com/wyattjoh/dokploy-mcp/commit/edec15ff60212527dafa6f8be9a204367e1abc2b))
+
 ## [0.5.1](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.5.0...dokploy-mcp-v0.5.1) (2026-04-05)
 
 
