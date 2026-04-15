@@ -23,6 +23,44 @@ export function register(server: InstanceAwareServer): void {
   );
 
   server.registerTool(
+    "dokploy_create_application",
+    {
+      title: "Create Application",
+      description:
+        "Create a new application within an environment. Git/build provider config (GitHub, Dockerfile, etc.) is set via separate update tools after creation.",
+      inputSchema: {
+        name: z.string().describe("Application display name"),
+        environmentId: z.string().describe("The parent environment ID"),
+        appName: z
+          .string()
+          .optional()
+          .describe("Container app name, 1-63 chars. Auto-generated if omitted."),
+        description: z.string().optional().describe("Application description"),
+        serverId: z
+          .string()
+          .optional()
+          .describe("Target server ID. Omit to deploy on the Dokploy host."),
+      },
+      annotations: {
+        readOnlyHint: false,
+        destructiveHint: false,
+      },
+    },
+    async ({ client, name, environmentId, appName, description, serverId }) => {
+      const application = await client.createApplication({
+        name,
+        environmentId,
+        appName,
+        description,
+        serverId,
+      });
+      return {
+        content: [{ type: "text" as const, text: JSON.stringify(application, null, 2) }],
+      };
+    },
+  );
+
+  server.registerTool(
     "dokploy_get_application",
     {
       title: "Get Application",

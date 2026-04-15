@@ -3,6 +3,60 @@ import { z } from "zod";
 
 export function register(server: InstanceAwareServer): void {
   server.registerTool(
+    "dokploy_create_compose",
+    {
+      title: "Create Compose",
+      description:
+        "Create a new compose stack within an environment. The compose file contents and git/source config can be set via dokploy_update_compose after creation.",
+      inputSchema: {
+        name: z.string().describe("Compose stack display name"),
+        environmentId: z.string().describe("The parent environment ID"),
+        appName: z
+          .string()
+          .optional()
+          .describe("Container app name, 1-63 chars. Auto-generated if omitted."),
+        description: z.string().optional().describe("Compose stack description"),
+        composeType: z
+          .enum(["docker-compose", "stack"])
+          .optional()
+          .describe("Compose runtime type. Defaults to docker-compose."),
+        composeFile: z.string().optional().describe("Inline compose file contents (YAML)"),
+        serverId: z
+          .string()
+          .optional()
+          .describe("Target server ID. Omit to deploy on the Dokploy host."),
+      },
+      annotations: {
+        readOnlyHint: false,
+        destructiveHint: false,
+      },
+    },
+    async ({
+      client,
+      name,
+      environmentId,
+      appName,
+      description,
+      composeType,
+      composeFile,
+      serverId,
+    }) => {
+      const compose = await client.createCompose({
+        name,
+        environmentId,
+        appName,
+        description,
+        composeType,
+        composeFile,
+        serverId,
+      });
+      return {
+        content: [{ type: "text" as const, text: JSON.stringify(compose, null, 2) }],
+      };
+    },
+  );
+
+  server.registerTool(
     "dokploy_get_compose",
     {
       title: "Get Compose",

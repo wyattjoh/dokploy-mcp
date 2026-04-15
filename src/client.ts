@@ -71,6 +71,20 @@ export class DokployClient {
     return this.get<unknown[]>("project.all");
   }
 
+  createProject(body: { name: string; description?: string; env?: string }): Promise<unknown> {
+    return this.post<unknown>("project.create", body);
+  }
+
+  // --- Environments ---
+
+  createEnvironment(body: {
+    name: string;
+    projectId: string;
+    description?: string;
+  }): Promise<unknown> {
+    return this.post<unknown>("environment.create", body);
+  }
+
   // --- Applications ---
 
   listAllApplications(): Promise<unknown[]> {
@@ -89,6 +103,16 @@ export class DokployClient {
 
   getApplication(applicationId: string): Promise<unknown> {
     return this.get<unknown>("application.one", { applicationId });
+  }
+
+  createApplication(body: {
+    name: string;
+    environmentId: string;
+    appName?: string;
+    description?: string;
+    serverId?: string;
+  }): Promise<unknown> {
+    return this.post<unknown>("application.create", body);
   }
 
   updateApplication(body: { applicationId: string; [key: string]: unknown }): Promise<true> {
@@ -176,6 +200,18 @@ export class DokployClient {
 
   getCompose(composeId: string): Promise<unknown> {
     return this.get<unknown>("compose.one", { composeId });
+  }
+
+  createCompose(body: {
+    name: string;
+    environmentId: string;
+    appName?: string;
+    description?: string;
+    composeType?: "docker-compose" | "stack";
+    composeFile?: string;
+    serverId?: string;
+  }): Promise<unknown> {
+    return this.post<unknown>("compose.create", body);
   }
 
   deployCompose(body: { composeId: string; title?: string; description?: string }): Promise<true> {
