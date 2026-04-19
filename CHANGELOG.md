@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.8.0...dokploy-mcp-v0.9.0) (2026-04-19)
+
+
+### Features
+
+* add volume backup management tools for applications and compose stacks ([9b129ad](https://github.com/wyattjoh/dokploy-mcp/commit/9b129ada83942f88e78d6de2cfb01ca9524419b2))
+
 ## [0.8.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.7.0...dokploy-mcp-v0.8.0) (2026-04-19)
 
 
