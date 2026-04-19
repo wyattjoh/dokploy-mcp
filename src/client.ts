@@ -284,7 +284,88 @@ export class DokployClient {
   listServers(): Promise<unknown[]> {
     return this.get<unknown[]>("server.all");
   }
+
+  // --- Backups ---
+
+  listDestinations(): Promise<unknown[]> {
+    return this.get<unknown[]>("destination.all");
+  }
+
+  getBackup(backupId: string): Promise<unknown> {
+    return this.get<unknown>("backup.one", { backupId });
+  }
+
+  createBackup(body: BackupCreateInput): Promise<unknown> {
+    return this.post<unknown>("backup.create", body);
+  }
+
+  updateBackup(body: BackupUpdateInput): Promise<unknown> {
+    return this.post<unknown>("backup.update", body);
+  }
+
+  removeBackup(backupId: string): Promise<unknown> {
+    return this.post<unknown>("backup.remove", { backupId });
+  }
+
+  triggerComposeBackup(backupId: string): Promise<true> {
+    return this.post<true>("backup.manualBackupCompose", { backupId });
+  }
+
+  listBackupFiles(params: {
+    destinationId: string;
+    search: string;
+    serverId?: string;
+  }): Promise<unknown[]> {
+    const query: Record<string, string> = {
+      destinationId: params.destinationId,
+      search: params.search,
+    };
+    if (params.serverId) query.serverId = params.serverId;
+    return this.get<unknown[]>("backup.listBackupFiles", query);
+  }
 }
+
+type DatabaseType = "postgres" | "mariadb" | "mysql" | "mongo" | "web-server" | "libsql";
+
+type BackupMetadata = {
+  postgres?: { databaseUser: string };
+  mariadb?: { databaseUser: string; databasePassword: string };
+  mongo?: { databaseUser: string; databasePassword: string };
+  mysql?: { databaseRootPassword: string };
+};
+
+export type BackupCreateInput = {
+  schedule: string;
+  prefix: string;
+  database: string;
+  destinationId: string;
+  databaseType: DatabaseType;
+  backupType: "database" | "compose";
+  enabled?: boolean;
+  keepLatestCount?: number;
+  serviceName?: string;
+  composeId?: string;
+  postgresId?: string;
+  mariadbId?: string;
+  mysqlId?: string;
+  mongoId?: string;
+  libsqlId?: string;
+  userId?: string;
+  metadata?: BackupMetadata;
+};
+
+export type BackupUpdateInput = {
+  backupId: string;
+  schedule: string;
+  enabled: boolean;
+  prefix: string;
+  destinationId: string;
+  database: string;
+  keepLatestCount: number;
+  serviceName: string;
+  metadata: BackupMetadata;
+  databaseType: DatabaseType;
+};
 
 // Client cache keyed by instance name.
 const clientCache = new Map<string, DokployClient>();
