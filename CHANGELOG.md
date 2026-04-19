@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.7.0...dokploy-mcp-v0.8.0) (2026-04-19)
+
+
+### Features
+
+* add backup management tools for compose stacks ([3b07349](https://github.com/wyattjoh/dokploy-mcp/commit/3b07349736fade49db5c98191686da13e4dd3353))
+
 ## [0.7.0](https://github.com/wyattjoh/dokploy-mcp/compare/dokploy-mcp-v0.6.1...dokploy-mcp-v0.7.0) (2026-04-15)
 
 
