@@ -14,6 +14,7 @@ import { register as registerBuild } from "./tools/build.js";
 import { register as registerCompose } from "./tools/compose.js";
 import { register as registerOperational } from "./tools/operational.js";
 import { register as registerBackups } from "./tools/backups.js";
+import { register as registerVolumeBackups } from "./tools/volume-backups.js";
 
 export function createServer(): McpServer {
   const mcpServer = new McpServer({
@@ -49,6 +50,7 @@ export function createServer(): McpServer {
   registerCompose(server);
   registerOperational(server);
   registerBackups(server);
+  registerVolumeBackups(server);
 
   return mcpServer;
 }

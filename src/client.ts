@@ -323,6 +323,38 @@ export class DokployClient {
     if (params.serverId) query.serverId = params.serverId;
     return this.get<unknown[]>("backup.listBackupFiles", query);
   }
+
+  // --- Volume Backups ---
+
+  listVolumeBackups(params: {
+    id: string;
+    volumeBackupType: VolumeBackupServiceType;
+  }): Promise<unknown[]> {
+    return this.get<unknown[]>("volumeBackups.list", {
+      id: params.id,
+      volumeBackupType: params.volumeBackupType,
+    });
+  }
+
+  getVolumeBackup(volumeBackupId: string): Promise<unknown> {
+    return this.get<unknown>("volumeBackups.one", { volumeBackupId });
+  }
+
+  createVolumeBackup(body: VolumeBackupCreateInput): Promise<unknown> {
+    return this.post<unknown>("volumeBackups.create", body);
+  }
+
+  updateVolumeBackup(body: VolumeBackupUpdateInput): Promise<unknown> {
+    return this.post<unknown>("volumeBackups.update", body);
+  }
+
+  removeVolumeBackup(volumeBackupId: string): Promise<unknown> {
+    return this.post<unknown>("volumeBackups.delete", { volumeBackupId });
+  }
+
+  runManualVolumeBackup(volumeBackupId: string): Promise<unknown> {
+    return this.post<unknown>("volumeBackups.runManually", { volumeBackupId });
+  }
 }
 
 type DatabaseType = "postgres" | "mariadb" | "mysql" | "mongo" | "web-server" | "libsql";
@@ -365,6 +397,35 @@ export type BackupUpdateInput = {
   serviceName: string;
   metadata: BackupMetadata;
   databaseType: DatabaseType;
+};
+
+export type VolumeBackupServiceType =
+  | "application"
+  | "postgres"
+  | "mysql"
+  | "mariadb"
+  | "mongo"
+  | "redis"
+  | "compose"
+  | "libsql";
+
+export type VolumeBackupCreateInput = {
+  name: string;
+  volumeName: string;
+  prefix: string;
+  cronExpression: string;
+  destinationId: string;
+  serviceType?: VolumeBackupServiceType;
+  serviceName?: string;
+  turnOff?: boolean;
+  keepLatestCount?: number;
+  enabled?: boolean;
+  applicationId?: string;
+  composeId?: string;
+};
+
+export type VolumeBackupUpdateInput = VolumeBackupCreateInput & {
+  volumeBackupId: string;
 };
 
 // Client cache keyed by instance name.
